@@ -1,0 +1,9 @@
+{
+  "name": "alaska-client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "11.5.0"
+  }
+}
