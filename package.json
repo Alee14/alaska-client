@@ -1,9 +1,50 @@
 {
   "name": "alaska-client",
+  "description": "Flash client in Electron",
+  "author": "Andrew Lee",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "electron": "11.5.0"
+    "electron-updater": "^6.6.2",
+    "electron-log": "^5.3.4"
+  },
+  "devDependencies": {
+    "electron": "11.5.0",
+    "electron-builder": "^26.0.12"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "me.alee14.alaska",
+    "productName": "Alaska Client",
+    "copyright": "© Copyright 2025, Andrew Lee",
+    "linux": {
+      "target": [
+        "tar.gz",
+        "appimage",
+        "snap"
+      ],
+      "category": "Games",
+      "publish": "github"
+    },
+    "win": {
+      "target": [
+        "zip",
+        "portable",
+        "nsis"
+      ],
+      "publish": "github"
+    },
+    "mac": {
+      "target": [
+        "zip",
+        "dmg"
+      ],
+      "category": "Games",
+      "publish": "github"
+    }
   }
 }
