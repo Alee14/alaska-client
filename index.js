@@ -11,16 +11,24 @@ autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 
 const pluginPaths = {
-	win32: path.join(__dirname, 'plugin/pepflashplayer.dll'),
-	darwin: path.join(__dirname, 'plugin/PepperFlashPlayer.plugin'),
-	linux: path.join(__dirname, 'plugin/libpepflashplayer.so')
-}
+  win32: path.join(app.getAppPath(), 'plugin/pepflashplayer.dll'),
+  darwin: path.join(app.getAppPath(), 'plugin/PepperFlashPlayer.plugin'),
+  linux: path.join(app.getAppPath(), 'plugin/libpepflashplayer.so')
+};
 
 const pluginName = pluginPaths[process.platform];
 
 if (process.platform === 'linux') app.commandLine.appendSwitch('--no-sandbox');
 app.commandLine.appendSwitch('ignore-certificate-errors');
-app.commandLine.appendSwitch('ppapi-flash-path', pluginName);
+
+if (process.mainModule.filename.includes('app.asar')) {
+  const unpackedPath = pluginName.replace('app.asar', 'app.asar.unpacked');
+  console.log(`Adjusted plugin path for asar: ${unpackedPath}`);
+  app.commandLine.appendSwitch('ppapi-flash-path', unpackedPath);
+} else {
+  app.commandLine.appendSwitch('ppapi-flash-path', pluginName);
+}
+
 app.commandLine.appendSwitch('ppapi-flash-version', '31.0.0.122');
 
 app.on('window-all-closed', () => {
